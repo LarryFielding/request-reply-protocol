@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
 
 using namespace std;
 
@@ -12,9 +13,11 @@ Solicitud::Solicitud() : msjId(0)
 	socketLocal = new SocketDatagrama(0);
 }
 
-char * Solicitud::doOperation(char *IP, int puerto, int operationId, char *arguments)
+char * Solicitud::doOperation(char *IP, int puerto, int operationId, const char *arguments)
 {
 	int bytes_env, bytes_recv;
+
+    cout << "Se recibió: " << arguments << endl;
 
 	// Crear mensaje que se envía:
 	struct mensaje cmensaje = {0, msjId++, suma, "1 2"};
@@ -39,4 +42,6 @@ char * Solicitud::doOperation(char *IP, int puerto, int operationId, char *argum
         perror("Error al recibir");
         exit(1);
     }
+
+    return paquete_recv.obtieneMensaje()->arguments;
 }

@@ -2,7 +2,6 @@
 #define RESPUESTA_H_
 
 #include "SocketDatagrama.h"
-#include "mensaje.h"
 
 class Respuesta
 {

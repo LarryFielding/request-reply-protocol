@@ -1,4 +1,4 @@
-#all: main_c main_s
+all: main_c main_s
 main_c: main_c.cpp Solicitud.o SocketDatagrama.o PaqueteDatagrama.o
 	g++ main_c.cpp Solicitud.o SocketDatagrama.o PaqueteDatagrama.o -o main_c
 main_s: main_s.cpp Respuesta.o SocketDatagrama.o PaqueteDatagrama.o
