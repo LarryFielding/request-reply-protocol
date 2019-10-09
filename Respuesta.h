@@ -9,8 +9,6 @@ class Respuesta
 public:
 	Respuesta(int pl);
 
-	~Respuesta();
-
 	struct mensaje * getRequest(void);
 
 	void sendReply(char * respuesta);

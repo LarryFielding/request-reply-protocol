@@ -7,8 +7,6 @@ class Solicitud
 {
 public:
 	Solicitud();
-
-	~Solicitud();
 	
 	char * doOperation(char *IP, int puerto, int operationId, char *arguments);
 

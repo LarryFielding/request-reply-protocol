@@ -1,5 +1,6 @@
 #include "Solicitud.h"
 #include "PaqueteDatagrama.h"
+#include "SocketDatagrama.h"
 
 #include <stdio.h>
 #include <stdlib.h>
