@@ -1,6 +1,8 @@
 #ifndef PAQUETE_DATAGRAMA_H_
 #define PAQUETE_DATAGRAMA_H_
 
+#include "mensaje.h"
+
 
 class PaqueteDatagrama
 {
@@ -9,6 +11,7 @@ private:
     char ip[16]; //Almacena la IP
     unsigned int longitud; //Almacena la longitude de la cadena de datos
     int puerto; //Almacena el puerto
+    struct mensaje * request_reply_msg; // Mensaje del protocolo petición-respuesta
     
 public:
     
@@ -22,6 +25,19 @@ public:
      * @param port [description]
      */
     PaqueteDatagrama(const char * payload, unsigned int size, const char * ipAddress, int port);
+
+
+    /**
+     * @brief Crea un paquete de envío tipo datagrama.
+     * @details El contenido del paquete es un struct mensaje,
+     * específico para usar con el protocolo petición-respuesta
+     * 
+     * @param mensaje Mensaje para protocolo petición-respuesta.
+     * @param int Tamaño del mensaje.
+     * @param ipAddress IP destino.
+     * @param port Puerto destino.
+     */
+    PaqueteDatagrama(struct mensaje * msj, unsigned int size, const char * ipAddress, int port);
 
     /**
      * @brief Crea un mensaje vacío de una longitud
@@ -95,6 +111,9 @@ public:
      * @param r [description]
      */
     void inicializaDatos(char * datos);
+
+
+    struct mensaje * obtieneMensaje();
 };
 
 #endif

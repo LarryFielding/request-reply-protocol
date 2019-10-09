@@ -51,6 +51,10 @@ public:
 	 * @return Número de bytes enviados.
 	 */
 	int envia(PaqueteDatagrama & p);
+
+	int enviaSolicitud(PaqueteDatagrama & p);
+
+	int recibeRespuesta(PaqueteDatagrama & p);
 	
 private:
 

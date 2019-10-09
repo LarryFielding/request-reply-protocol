@@ -8,11 +8,18 @@ PaqueteDatagrama::PaqueteDatagrama(const char * payload, unsigned int size, cons
 	memcpy(datos, payload, size);
 }
 
+PaqueteDatagrama::PaqueteDatagrama(struct mensaje * msj, unsigned int size, const char * ipAddress, int port) : longitud(size), puerto(port)
+{
+	strcpy(ip, ipAddress);
+	request_reply_msg = msj;
+}
+
 PaqueteDatagrama::PaqueteDatagrama(unsigned int size) : longitud(size), datos(new char[size+1]) {}
 
 PaqueteDatagrama::~PaqueteDatagrama()
 {
 	delete[] datos;
+	delete request_reply_msg;
 }
 
 char * PaqueteDatagrama::obtieneDireccion()
@@ -52,4 +59,9 @@ void PaqueteDatagrama::inicializaIp(char * ip)
 void PaqueteDatagrama::inicializaDatos(char * datos)
 {
 	memcpy(this->datos, datos, longitud);
+}
+
+struct mensaje * PaqueteDatagrama::obtieneMensaje()
+{
+	return request_reply_msg;
 }
