@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# Custom Main
+main_s
+main_c
+
+# Specific debian
+
+.directory
