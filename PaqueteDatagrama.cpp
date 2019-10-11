@@ -11,7 +11,10 @@ PaqueteDatagrama::PaqueteDatagrama(const char * payload, unsigned int size, cons
 PaqueteDatagrama::PaqueteDatagrama(struct mensaje * msj, unsigned int size, const char * ipAddress, int port) : longitud(size), puerto(port)
 {
 	strcpy(ip, ipAddress);
-	request_reply_msg = msj;
+	request_reply_msg.messageType = msj->messageType;
+	request_reply_msg.requestId = msj->requestId;
+	request_reply_msg.operationId = msj->operationId;
+	strcpy(request_reply_msg.arguments, msj->arguments);
 }
 
 PaqueteDatagrama::PaqueteDatagrama(unsigned int size) : longitud(size), datos(new char[size+1]) {}
@@ -19,7 +22,6 @@ PaqueteDatagrama::PaqueteDatagrama(unsigned int size) : longitud(size), datos(ne
 PaqueteDatagrama::~PaqueteDatagrama()
 {
 	delete[] datos;
-	delete request_reply_msg;
 }
 
 char * PaqueteDatagrama::obtieneDireccion()
@@ -63,5 +65,6 @@ void PaqueteDatagrama::inicializaDatos(char * datos)
 
 struct mensaje * PaqueteDatagrama::obtieneMensaje()
 {
-	return request_reply_msg;
+	return &request_reply_msg;
 }
+

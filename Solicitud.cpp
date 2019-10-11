@@ -5,10 +5,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <string.h>
 
 using namespace std;
 
-Solicitud::Solicitud() : msjId(0)
+Solicitud::Solicitud() : msjId(90)
 {
 	socketLocal = new SocketDatagrama(0);
 }
@@ -17,12 +18,18 @@ char * Solicitud::doOperation(char *IP, int puerto, int operationId, const char 
 {
 	int bytes_env, bytes_recv;
 
-    cout << "Se recibió: " << arguments << endl;
 
 	// Crear mensaje que se envía:
-	struct mensaje cmensaje = {0, msjId++, suma, "1 2"};
+	struct mensaje cmensaje;// = {0, msjId++, suma, arguments};
+    cmensaje.messageType = 0;
+    cmensaje.requestId = msjId++;
+    cmensaje.operationId = suma;
+    strcpy(cmensaje.arguments, arguments);
 	// Adjuntar al paquete datagrama:
 	PaqueteDatagrama paquete_env = PaqueteDatagrama(&cmensaje, sizeof(cmensaje), IP, puerto);
+    //paquete_env.inicializaMensaje(&cmensaje);
+
+    cout << "se va a enviar como argumentos: " << paquete_env.obtieneMensaje()->arguments << endl;
 
 	// Enviar:
 	bytes_env = socketLocal->enviaSolicitud(paquete_env);

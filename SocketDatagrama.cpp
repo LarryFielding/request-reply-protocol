@@ -84,9 +84,9 @@ int SocketDatagrama::recibeRespuesta(PaqueteDatagrama &p)
 	tam_dir = sizeof(direccionForanea);
 	cout << "Esperando mensaje..." << endl;
 
-	struct mensaje * temp = (struct mensaje *)malloc(sizeof(struct mensaje));
+	struct mensaje temp;// = (struct mensaje *)malloc(sizeof(struct mensaje));
 	
-	bytes_recv = recvfrom(s, temp, sizeof(* temp), 0, (struct sockaddr *) &direccionForanea, &tam_dir);
+	bytes_recv = recvfrom(s, &temp, sizeof(temp), 0, (struct sockaddr *) &direccionForanea, &tam_dir);
 	if (bytes_recv < 0)
 	{
 		perror("Error al recibir");
@@ -97,8 +97,9 @@ int SocketDatagrama::recibeRespuesta(PaqueteDatagrama &p)
 	inet_ntop(AF_INET, &(direccionForanea.sin_addr), ipRemota, INET_ADDRSTRLEN);
 	p.inicializaIp(ipRemota);
 	p.inicializaPuerto(htons(direccionForanea.sin_port));
+	
 
-	cout << "------ Se recibió del cliente: " << temp->arguments << endl;
+	cout << "------ Se recibió del cliente: " << temp.arguments << endl;
 	
 	return bytes_recv;
 }

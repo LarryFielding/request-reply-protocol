@@ -11,7 +11,7 @@ private:
     char ip[16]; //Almacena la IP
     unsigned int longitud; //Almacena la longitude de la cadena de datos
     int puerto; //Almacena el puerto
-    struct mensaje * request_reply_msg; // Mensaje del protocolo petición-respuesta
+    struct mensaje request_reply_msg; // Mensaje del protocolo petición-respuesta
     
 public:
     
