@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Solicitud::Solicitud() : msjId(90)
+Solicitud::Solicitud() : msjId(0)
 {
 	socketLocal = new SocketDatagrama(0);
 }
@@ -18,21 +18,17 @@ char * Solicitud::doOperation(char *IP, int puerto, int operationId, const char 
 {
 	int bytes_env, bytes_recv;
 
-
 	// Crear mensaje que se envía:
-	struct mensaje cmensaje;// = {0, msjId++, suma, arguments};
+	struct mensaje cmensaje;
     cmensaje.messageType = 0;
-    cmensaje.requestId = msjId++;
+    cmensaje.requestId = ++msjId;
     cmensaje.operationId = suma;
     strcpy(cmensaje.arguments, arguments);
 	// Adjuntar al paquete datagrama:
 	PaqueteDatagrama paquete_env = PaqueteDatagrama(&cmensaje, sizeof(cmensaje), IP, puerto);
-    //paquete_env.inicializaMensaje(&cmensaje);
-
-    cout << "se va a enviar como argumentos: " << paquete_env.obtieneMensaje()->arguments << endl;
 
 	// Enviar:
-	bytes_env = socketLocal->enviaSolicitud(paquete_env);
+	bytes_env = socketLocal->enviaMensaje(paquete_env);
 
 	if (bytes_env < 0)
     {
@@ -42,7 +38,7 @@ char * Solicitud::doOperation(char *IP, int puerto, int operationId, const char 
 
     PaqueteDatagrama paquete_recv = PaqueteDatagrama(MAX_BUFF_TAM);
 
-    bytes_recv = socketLocal->recibeRespuesta(paquete_recv);
+    bytes_recv = socketLocal->recibeMensaje(paquete_recv);
 
     if (bytes_recv < 0)
     {

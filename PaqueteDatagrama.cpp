@@ -68,3 +68,12 @@ struct mensaje * PaqueteDatagrama::obtieneMensaje()
 	return &request_reply_msg;
 }
 
+void PaqueteDatagrama::inicializaMensaje(struct mensaje * msj)
+{
+	request_reply_msg.messageType = msj->messageType;
+	request_reply_msg.requestId = msj->requestId;
+	request_reply_msg.operationId = msj->operationId;
+	strcpy(request_reply_msg.arguments, msj->arguments);
+}
+
+

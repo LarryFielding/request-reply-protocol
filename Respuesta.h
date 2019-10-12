@@ -14,6 +14,8 @@ public:
 
 private:
 	SocketDatagrama * socketLocal;
+
+	unsigned int msjId;
 	
 };
 

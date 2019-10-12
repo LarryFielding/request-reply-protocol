@@ -52,9 +52,13 @@ public:
 	 */
 	int envia(PaqueteDatagrama & p);
 
-	int enviaSolicitud(PaqueteDatagrama & p);
+	int enviaMensaje(PaqueteDatagrama & p);
 
-	int recibeRespuesta(PaqueteDatagrama & p);
+	int recibeMensaje(PaqueteDatagrama & p);
+
+	const void * obtieneDireccionForanea();
+
+	int obtienePuertoForaneo();
 	
 private:
 

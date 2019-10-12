@@ -114,6 +114,8 @@ public:
 
 
     struct mensaje * obtieneMensaje();
+
+    void inicializaMensaje(struct mensaje * msj);
 };
 
 #endif

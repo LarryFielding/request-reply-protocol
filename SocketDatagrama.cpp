@@ -75,16 +75,15 @@ int SocketDatagrama::recibe(PaqueteDatagrama &p)
 	return bytes_recv;
 }
 
-int SocketDatagrama::recibeRespuesta(PaqueteDatagrama &p)
+int SocketDatagrama::recibeMensaje(PaqueteDatagrama &p)
 {
 	int bytes_recv;
 	socklen_t tam_dir;
 	char ipRemota[INET_ADDRSTRLEN];
 	
 	tam_dir = sizeof(direccionForanea);
-	cout << "Esperando mensaje..." << endl;
 
-	struct mensaje temp;// = (struct mensaje *)malloc(sizeof(struct mensaje));
+	struct mensaje temp;
 	
 	bytes_recv = recvfrom(s, &temp, sizeof(temp), 0, (struct sockaddr *) &direccionForanea, &tam_dir);
 	if (bytes_recv < 0)
@@ -97,9 +96,7 @@ int SocketDatagrama::recibeRespuesta(PaqueteDatagrama &p)
 	inet_ntop(AF_INET, &(direccionForanea.sin_addr), ipRemota, INET_ADDRSTRLEN);
 	p.inicializaIp(ipRemota);
 	p.inicializaPuerto(htons(direccionForanea.sin_port));
-	
-
-	cout << "------ Se recibió del cliente: " << temp.arguments << endl;
+	p.inicializaMensaje(&temp);
 	
 	return bytes_recv;
 }
@@ -128,7 +125,7 @@ int SocketDatagrama::envia(PaqueteDatagrama &p)
 	return bytes_env;
 }
 
-int SocketDatagrama::enviaSolicitud(PaqueteDatagrama &p)
+int SocketDatagrama::enviaMensaje(PaqueteDatagrama &p)
 {
 	int bytes_env;
 	socklen_t tam_dir;
@@ -150,4 +147,14 @@ int SocketDatagrama::enviaSolicitud(PaqueteDatagrama &p)
 	}
 
 	return bytes_env;
+}
+
+const void * SocketDatagrama::obtieneDireccionForanea()
+{
+	return &(direccionForanea.sin_addr);
+}
+
+int SocketDatagrama::obtienePuertoForaneo()
+{
+	return htons(direccionForanea.sin_port);
 }
