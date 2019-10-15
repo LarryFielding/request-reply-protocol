@@ -14,6 +14,7 @@ int main(int argc, char const *argv[])
 
     struct mensaje * msj;
     char message[20];
+    int a = 0, b = 0;
 
 	Respuesta respuesta = Respuesta(7200);
     
@@ -21,17 +22,22 @@ int main(int argc, char const *argv[])
     while(1)
     {
        msj = respuesta.getRequest();
+       // Obtiene números de la cadena:
+       sscanf(msj->arguments, "%d %d", &a, &b);
 
-       if (msj->operationId == suma)
+       // Construye una cadena con el resultado de la operación:
+
+       switch (msj->operationId)
        {
-       	int a = 0, b = 0;
-       	// Obtiene números de la cadena:
-       	sscanf(msj->arguments, "%d %d", &a, &b);
-       	// Construye una cadena con el resultado de la operación:
-       	sprintf(message, "%d + %d = %d", a, b, a+b);
-       	respuesta.sendReply(message);
+       		case suma:
+       			sprintf(message, "%d + %d = %d", a, b, a+b);
+       			break;
+   			default:
+   				strcpy(message, "operación no soportada\n");
+       			break;
        }
 
+       respuesta.sendReply(message);
     }
     
 	return 0;
